@@ -4,7 +4,7 @@ export default {
   target: 'static',
 
   head: {
-    title: 'bot-service',
+    title: 'ศูนย์รับแจ้งเรื่องร้องเรียน',
     htmlAttrs: {
       lang: 'en'
     },

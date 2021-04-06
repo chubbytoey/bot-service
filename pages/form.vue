@@ -4,7 +4,7 @@
       <a-form-item label="หัวข้อ">
         <a-input
           v-decorator="['topic', { rules: [{ required: true, message: 'กรุณากรอกหัวข้อ!' }] }]"
-          placeholder="หัวข้อข่าว"
+          placeholder="หัวข้อ"
         />
       </a-form-item>
       <a-form-item label="รายละเอียด">
