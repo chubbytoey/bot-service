@@ -76,8 +76,7 @@ export default {
           this.data.userId = profile.userId
           this.fetchData(this.userId)
         })
-      }).catch(err => alert(err))
-    alert(this.$route.name)
+      }).catch(err => console.log(err))
   },
   methods: {
     handleSubmit (e) {
