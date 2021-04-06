@@ -38,8 +38,7 @@ const environmentConfig = {
 }
 
 const mergeConfig = (baseConfig, replaceConfig) => {
-  // eslint-disable-next-line array-callback-return
-  Object.keys(baseConfig).map((key) => {
+  Object.keys(baseConfig).forEach((key) => {
     if (replaceConfig[key] !== undefined) {
       if (baseConfig[key] instanceof Object) {
         baseConfig[key] = merge(baseConfig[key], replaceConfig[key])

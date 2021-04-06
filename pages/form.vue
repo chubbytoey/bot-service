@@ -88,7 +88,9 @@ export default {
           this.data.province = values.province
           this.data.detail = values.detail
           this.data.lineId = values.lineId
+          console.log('haaa', this.data)
           await reportAPI.addReport(this.data).then((res) => {
+            console.log('eiei', res)
             if (res.data.successful) {
               this.success = 'ส่งรายการสำเร็จ'
             } else {

@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import reportAPI from '~/api/report'
+
 export default {
   data () {
     return {
@@ -79,6 +81,9 @@ export default {
       this.form.setFieldsValue({
         note: `Hi, ${value === 'เชียงใหม่' ? 'เชียงใหม่' : 'กรุงเทพ'}!`
       })
+    },
+    async test () {
+      await reportAPI.getReport().then(res => console.log('eiei', res))
     }
   }
 }

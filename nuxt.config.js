@@ -23,7 +23,8 @@ export default {
   ],
 
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '~/plugins/createInstanceAPI.js'
   ],
 
   components: true,
