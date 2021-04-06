@@ -44,7 +44,6 @@
         </a-button>
       </a-form-item>
     </a-form>
-    {{ success }}
   </div>
 </template>
 
@@ -61,8 +60,7 @@ export default {
         province: '',
         topic: '',
         lineId: ''
-      },
-      success: null
+      }
     }
   },
   methods: {
@@ -71,9 +69,6 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.data = values
-          this.success = 'ส่งรายการสำเร็จ'
-        } else {
-          this.success = 'ลองใหม่อีกครั้ง'
         }
       })
     },

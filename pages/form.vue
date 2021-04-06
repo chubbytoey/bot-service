@@ -49,7 +49,6 @@
 
 <script>
 import liff from '@line/liff'
-import toastr from 'toastr'
 import reportAPI from '~/api/report'
 
 export default {
@@ -89,11 +88,8 @@ export default {
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
             if (res.successful) {
-              toastr.success('ส่งอีเมลยืนยันตัวตนสำเร็จ')
-            } else {
-              toastr.error('เกิดข้อผิดพลาดบางอย่าง')
+              liff.closeWindow()
             }
-            liff.closeWindow()
           })
         }
       })

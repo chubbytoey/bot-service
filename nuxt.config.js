@@ -19,8 +19,7 @@ export default {
   },
 
   css: [
-    'ant-design-vue/dist/antd.css',
-    'toastr/build/toastr.min.css'
+    'ant-design-vue/dist/antd.css'
   ],
 
   plugins: [
