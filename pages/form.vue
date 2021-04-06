@@ -44,12 +44,12 @@
         </a-button>
       </a-form-item>
     </a-form>
-    {{ success }}
   </div>
 </template>
 
 <script>
 import liff from '@line/liff'
+import toastr from 'toastr'
 import reportAPI from '~/api/report'
 
 export default {
@@ -64,8 +64,7 @@ export default {
         userId: '',
         type: this.$route.query.type,
         lineId: ''
-      },
-      success: null
+      }
     }
   },
   mounted () {
@@ -90,9 +89,9 @@ export default {
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
             if (res.successful) {
-              this.success = 'ส่งรายการสำเร็จ'
+              toastr.success('ส่งอีเมลยืนยันตัวตนสำเร็จ')
             } else {
-              this.success = 'ลองใหม่อีกครั้ง'
+              toastr.error('เกิดข้อผิดพลาดบางอย่าง')
             }
             liff.closeWindow()
           })
