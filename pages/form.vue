@@ -34,7 +34,7 @@
       </a-form-item>
       <a-form-item label="ไอดีไลน์">
         <a-input
-          v-decorator="['lineId', { rules: [{ required: true, message: 'กรุณากรอกไอดีไลน์' }] }]"
+          v-decorator="['lineId']"
           placeholder="ไอดีไลน์"
         />
       </a-form-item>
@@ -49,26 +49,48 @@
 </template>
 
 <script>
+import liff from '@line/liff'
+
 export default {
   data () {
     return {
       formLayout: 'horizontal',
       form: this.$form.createForm(this, { name: 'coordinated' }),
       data: {
-        detail: '',
-        province: '',
         topic: '',
+        province: '',
+        detail: '',
+        userId: '',
+        type: this.$route.query.type,
         lineId: ''
       },
       success: null
     }
+  },
+  mounted () {
+    liff.init({ liffId: '1655832876-mQJo6BbZ' })
+      .then(() => {
+        if (!liff.isLoggedIn()) { return liff.login() }
+
+        return liff.getProfile().then((profile) => {
+          this.data.userId = profile.userId
+          alert('profile' + profile.userId)
+          alert(this.userId)
+          this.fetchData(this.userId)
+        })
+      }).catch(err => alert(err))
+    alert(this.$route.name)
   },
   methods: {
     handleSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.data = values
+          this.data.topic = values.topic
+          this.data.province = values.province
+          this.data.detail = values.detail
+          this.data.lineId = values.lineId
+          console.log('eiei', this.data)
           this.success = 'ส่งรายการสำเร็จ'
         } else {
           this.success = 'ลองใหม่อีกครั้ง'
