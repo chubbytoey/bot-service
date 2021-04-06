@@ -50,6 +50,7 @@
 
 <script>
 import liff from '@line/liff'
+import reportAPI from '~/api/report'
 
 export default {
   data () {
@@ -81,14 +82,19 @@ export default {
   methods: {
     handleSubmit (e) {
       e.preventDefault()
-      this.form.validateFields((err, values) => {
+      this.form.validateFields(async (err, values) => {
         if (!err) {
           this.data.topic = values.topic
           this.data.province = values.province
           this.data.detail = values.detail
           this.data.lineId = values.lineId
-          console.log('eiei', this.data)
-          this.success = 'ส่งรายการสำเร็จ'
+          await reportAPI.addReport(this.data).then((res) => {
+            if (res.data.successful) {
+              this.success = 'ส่งรายการสำเร็จ'
+            } else {
+              this.success = 'ลองใหม่อีกครั้ง'
+            }
+          })
         } else {
           this.success = 'ลองใหม่อีกครั้ง'
         }
