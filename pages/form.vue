@@ -32,11 +32,6 @@
           </a-select-option>
         </a-select>
       </a-form-item>
-      <a-form-item label="ไอดีไลน์">
-        <a-input
-          placeholder="ไอดีไลน์"
-        />
-      </a-form-item>
       <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
         <a-button type="primary" html-type="submit">
           Submit
@@ -60,8 +55,7 @@ export default {
         province: '',
         detail: '',
         userId: '',
-        type: this.$route.query.type,
-        lineId: ''
+        type: this.$route.query.type
       }
     }
   },
