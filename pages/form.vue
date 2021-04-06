@@ -75,6 +75,7 @@ export default {
 
         return liff.getProfile().then((profile) => {
           this.data.userId = profile.userId
+          this.fetchData(this.userId)
         })
       }).catch(err => console.log(err))
   },
@@ -87,6 +88,7 @@ export default {
           this.data.province = values.province
           this.data.detail = values.detail
           this.data.lineId = values.lineId
+          console.log(this.data)
           await reportAPI.addReport(this.data).then((res) => {
             console.log('haaa', res)
             if (res.successful) {
