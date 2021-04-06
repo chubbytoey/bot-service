@@ -74,8 +74,6 @@ export default {
 
         return liff.getProfile().then((profile) => {
           this.data.userId = profile.userId
-          alert('profile' + profile.userId)
-          alert(this.userId)
           this.fetchData(this.userId)
         })
       }).catch(err => alert(err))
