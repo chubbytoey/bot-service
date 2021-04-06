@@ -88,6 +88,7 @@ export default {
           this.data.detail = values.detail
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
+            console.log('haaa', res)
             if (res.successful) {
               this.success = 'ส่งรายการสำเร็จ'
             } else {
