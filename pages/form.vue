@@ -88,6 +88,7 @@ export default {
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
             if (res.successful) {
+              this.$message.success('สำเร็จ')
               liff.closeWindow()
             }
           })
