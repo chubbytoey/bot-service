@@ -75,7 +75,6 @@ export default {
 
         return liff.getProfile().then((profile) => {
           this.data.userId = profile.userId
-          this.fetchData(this.userId)
         })
       }).catch(err => console.log(err))
   },
@@ -89,7 +88,6 @@ export default {
           this.data.detail = values.detail
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
-            this.data = null
             if (res.successful) {
               this.success = 'ส่งรายการสำเร็จ'
             } else {
