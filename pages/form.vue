@@ -55,7 +55,7 @@ export default {
         province: '',
         detail: '',
         userId: '',
-        type: this.$route.query.type
+        type: new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('type')
       }
     }
   },
