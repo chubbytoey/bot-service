@@ -34,7 +34,6 @@
       </a-form-item>
       <a-form-item label="ไอดีไลน์">
         <a-input
-          v-decorator="['lineId']"
           placeholder="ไอดีไลน์"
         />
       </a-form-item>
