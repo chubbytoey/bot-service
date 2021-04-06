@@ -27,7 +27,7 @@
           <a-select-option value="เชียงใหม่">
             เชียงใหม่
           </a-select-option>
-          <a-select-option value="กรุงเทพ">
+          <a-select-option value="กรุงเทพมหานคร">
             กรุงเทพ
           </a-select-option>
         </a-select>
