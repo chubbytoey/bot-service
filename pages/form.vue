@@ -60,13 +60,14 @@ export default {
     }
   },
   mounted () {
+    const vm = this
     liff.init({ liffId: '1655832876-mQJo6BbZ' })
       .then(() => {
         if (!liff.isLoggedIn()) { return liff.login() }
 
         return liff.getProfile().then((profile) => {
-          this.data.userId = profile.userId
-          this.fetchData(this.userId)
+          vm.data.userId = profile.userId
+          vm.fetchData(vm.userId)
         })
       }).catch(err => console.log(err))
   },
