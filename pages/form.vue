@@ -60,19 +60,31 @@ export default {
     }
   },
   mounted () {
-    const vm = this
-    liff.init({ liffId: '1655832876-mQJo6BbZ' })
-      .then(() => {
-        if (!liff.isLoggedIn()) {
-          return liff.login()
-        } else {
-          return liff.getProfile().then((profile) => {
-            window.alert('โปรไฟล์ : ', profile)
-            vm.data.userId = profile.userId
-            vm.fetchData(vm.userId)
-          })
-        }
-      }).catch(err => console.log(err))
+    const self = this
+    setTimeout(function () {
+      liff.init({ liffId: '1655832876-mQJo6BbZ' })
+        .then(() => {
+          if (!liff.isLoggedIn()) {
+            liff.login()
+          } else {
+            liff.getProfile().then((profile) => {
+              self.data.userId = profile.userId
+            }).catch(err => console.log(err))
+          }
+        }).catch(err => console.log(err))
+    }, 0)
+  //   liff.init({ liffId: '1655832876-mQJo6BbZ' })
+  //     .then(() => {
+  //       if (!liff.isLoggedIn()) {
+  //         return liff.login()
+  //       } else {
+  //         return liff.getProfile().then((profile) => {
+  //           window.alert('โปรไฟล์ : ', profile)
+  //           vm.data.userId = profile.userId
+  //           vm.fetchData(vm.userId)
+  //         })
+  //       }
+  //     }).catch(err => console.log(err))
   },
   methods: {
     handleSubmit (e) {
