@@ -83,7 +83,10 @@ export default {
       this.form.validateFields(async (err, values) => {
         if (!err) {
           this.data.topic = values.topic
-          this.data.province = values.province
+          if (values.province) {
+            console.log('มี')
+            this.data.province = values.province
+          }
           this.data.detail = values.detail
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
