@@ -62,9 +62,9 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-    })
+    // this.$nextTick(() => {
+    //   this.$nuxt.$loading.start()
+    // })
     const self = this
     setTimeout(function () {
       liff.init({ liffId: '1655832876-mQJo6BbZ' })
@@ -121,16 +121,16 @@ export default {
         } else if (res.data.results[0].components.state === 'Bangkok Province') {
           this.data.province = 'กรุงเทพมหานคร'
         }
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
+        // this.$nextTick(() => {
+        //   this.$nuxt.$loading.finish()
+        // })
       })
     },
     failed (error) {
       console.log('failed', error)
-      this.$nextTick(() => {
-        this.$nuxt.$loading.finish()
-      })
+      // this.$nextTick(() => {
+      //   this.$nuxt.$loading.finish()
+      // })
     }
   }
 }
