@@ -62,7 +62,22 @@ export default {
     }
   },
   mounted () {
-    this.lineLogin()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const self = this
+    setTimeout(function () {
+      liff.init({ liffId: '1655832876-mQJo6BbZ' })
+        .then(() => {
+          if (!liff.isLoggedIn()) {
+            liff.login()
+          } else {
+            liff.getProfile().then((profile) => {
+              self.data.userId = profile.userId
+            }).catch(err => console.log(err))
+          }
+        }).catch(err => console.log(err))
+    }, 0)
     this.getLocation()
   },
   methods: {
@@ -117,24 +132,6 @@ export default {
       this.$nextTick(() => {
         this.$nuxt.$loading.finish()
       })
-    },
-    lineLogin () {
-      this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-      })
-      const self = this
-      setTimeout(function () {
-        liff.init({ liffId: '1655832876-mQJo6BbZ' })
-          .then(() => {
-            if (!liff.isLoggedIn()) {
-              liff.login()
-            } else {
-              liff.getProfile().then((profile) => {
-                self.data.userId = profile.userId
-              }).catch(err => console.log(err))
-            }
-          }).catch(err => console.log(err))
-      }, 0)
     }
   }
 }
