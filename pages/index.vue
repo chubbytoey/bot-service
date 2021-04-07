@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import liff from '@line/liff'
 import axios from 'axios'
 import reportAPI from '~/api/report'
 
@@ -55,8 +56,8 @@ export default {
         type: new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('type')
       },
       location: {
-        latitude: '',
-        longitude: ''
+        latitude: null,
+        longitude: null
       }
     }
   },
@@ -69,10 +70,17 @@ export default {
       this.form.validateFields(async (err, values) => {
         if (!err) {
           this.data.topic = values.topic
-          this.data.province = values.province
+          if (values.province) {
+            console.log('มี')
+            this.data.province = values.province
+          }
           this.data.detail = values.detail
           this.data.lineId = values.lineId
-          await reportAPI.addReport(this.data)
+          await reportAPI.addReport(this.data).then((res) => {
+            if (res.successful) {
+              liff.closeWindow()
+            }
+          })
         }
       })
     },
@@ -82,6 +90,9 @@ export default {
       })
     },
     getLocation () {
+      this.$nextTick(() => {
+        this.$nuxt.$loading.start()
+      })
       if (window.navigator) {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
       }
@@ -92,16 +103,22 @@ export default {
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.latitude},${this.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
+        console.log('haaa', res.data.results[0].components.state)
         if (res.data.results[0].components.state === 'Chiang Mai Province') {
           this.data.province = 'เชียงใหม่'
         } else if (res.data.results[0].components.state === 'Bangkok Province') {
           this.data.province = 'กรุงเทพมหานคร'
         }
-        // this.data.province = res.data.results[0].components.state
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
       })
     },
     failed () {
       console.log('failed')
+      this.$nextTick(() => {
+        this.$nuxt.$loading.finish()
+      })
     }
   }
 }

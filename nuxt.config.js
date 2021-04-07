@@ -17,6 +17,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  loading: '~/components/Loading.vue',
 
   css: [
     'ant-design-vue/dist/antd.css'

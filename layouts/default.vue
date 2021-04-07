@@ -5,6 +5,8 @@
 </template>
 
 <style>
+@import '~/styles/global.scss';
+
 html {
   font-family:
     'Source Sans Pro',
