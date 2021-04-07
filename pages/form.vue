@@ -75,6 +75,7 @@ export default {
           }
         }).catch(err => console.log(err))
     }, 0)
+    this.getLocation()
   },
   methods: {
     handleSubmit (e) {
