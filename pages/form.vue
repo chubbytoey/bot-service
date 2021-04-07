@@ -43,6 +43,7 @@
 
 <script>
 import liff from '@line/liff'
+import axios from 'axios'
 import reportAPI from '~/api/report'
 
 export default {
@@ -56,6 +57,10 @@ export default {
         detail: '',
         userId: '',
         type: new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('type')
+      },
+      location: {
+        latitude: '',
+        longitude: ''
       }
     }
   },
@@ -73,18 +78,6 @@ export default {
           }
         }).catch(err => console.log(err))
     }, 0)
-  //   liff.init({ liffId: '1655832876-mQJo6BbZ' })
-  //     .then(() => {
-  //       if (!liff.isLoggedIn()) {
-  //         return liff.login()
-  //       } else {
-  //         return liff.getProfile().then((profile) => {
-  //           window.alert('โปรไฟล์ : ', profile)
-  //           vm.data.userId = profile.userId
-  //           vm.fetchData(vm.userId)
-  //         })
-  //       }
-  //     }).catch(err => console.log(err))
   },
   methods: {
     handleSubmit (e) {
@@ -107,6 +100,24 @@ export default {
       this.form.setFieldsValue({
         note: `Hi, ${value === 'เชียงใหม่' ? 'เชียงใหม่' : 'กรุงเทพ'}!`
       })
+    },
+    getLocation () {
+      if (window.navigator) {
+        window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
+      }
+    },
+    success (position) {
+      this.latitude = position.coords.latitude
+      this.longitude = position.coords.longitude
+      const apiKey = 'b9a603fbea534698ba75cab622aa2109'
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.latitude},${this.longitude}&key=${apiKey}`
+      axios.get(url).then((res) => {
+        this.data.province = res.data.results[0].components.state
+        console.log(this.data.province)
+      })
+    },
+    failed () {
+      console.log('failed')
     }
   }
 }
