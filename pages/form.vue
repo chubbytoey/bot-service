@@ -15,7 +15,7 @@
           :auto-size="{ minRows: 3, maxRows: 5 }"
         />
       </a-form-item>
-      {{ data.province }}
+      {{ location }}
       <a-form-item label="จังหวัด">
         <a-select
           v-model="data.province"
