@@ -15,7 +15,6 @@
           :auto-size="{ minRows: 3, maxRows: 5 }"
         />
       </a-form-item>
-      {{ location }}
       <a-form-item label="จังหวัด">
         <a-select
           v-model="data.province"
@@ -128,6 +127,7 @@ export default {
       })
     },
     failed (error) {
+      window.alert(error)
       console.log('failed', error)
       this.$nextTick(() => {
         this.$nuxt.$loading.finish()
