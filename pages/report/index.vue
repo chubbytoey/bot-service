@@ -21,9 +21,6 @@ export default {
   },
   methods: {
     async getReport () {
-      // const queryString = decodeURIComponent(window.location.search).replace('?liff.state=', '')
-      // const params = new URLSearchParams(queryString)
-      // const url = params.get('action')
       await reportAPI.getReport(new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('province')).then((res) => {
         this.reports = res
       })
