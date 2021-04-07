@@ -123,9 +123,9 @@ export default {
         } else if (res.data.results[0].components.state === 'Bangkok Province') {
           this.data.province = 'กรุงเทพมหานคร'
         }
-        // this.$nextTick(() => {
-        //   this.$nuxt.$loading.finish()
-        // })
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
       })
     },
     failed (error) {
