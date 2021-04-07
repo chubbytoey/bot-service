@@ -115,7 +115,6 @@ export default {
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.location.latitude},${this.location.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
-        window.alert('res', res)
         console.log('haaa', res.data.results[0].components.state)
         if (res.data.results[0].components.state === 'Chiang Mai Province') {
           this.data.province = 'เชียงใหม่'
@@ -128,7 +127,6 @@ export default {
       })
     },
     failed (error) {
-      window.alert('error', error)
       console.log('failed', error)
       this.$nextTick(() => {
         this.$nuxt.$loading.finish()
