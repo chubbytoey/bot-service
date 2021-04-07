@@ -88,7 +88,6 @@ export default {
         if (!err) {
           this.data.topic = values.topic
           if (values.province) {
-            console.log('มี')
             this.data.province = values.province
           }
           this.data.detail = values.detail
@@ -112,8 +111,8 @@ export default {
       }
     },
     success (position) {
-      this.latitude = position.coords.latitude
-      this.longitude = position.coords.longitude
+      this.location.latitude = position.coords.latitude
+      this.location.longitude = position.coords.longitude
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.latitude},${this.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
