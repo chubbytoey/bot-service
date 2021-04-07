@@ -17,10 +17,7 @@
       </a-form-item>
       <a-form-item label="จังหวัด">
         <a-select
-          v-decorator="[
-            'province',
-            { rules: [{ required: true, message: 'กรุณาเลือกจังหวัด' }] },
-          ]"
+          v-model="data.province"
           placeholder="เลือกจังหวัดของท่าน"
           @change="handleSelectChange"
         >
@@ -112,8 +109,12 @@ export default {
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.latitude},${this.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
-        this.data.province = res.data.results[0].components.state
-        console.log(this.data.province)
+        if (res.data.results[0].components.state === 'Chiang Mai Province') {
+          this.data.province = 'เชียงใหม่'
+        } else if (res.data.results[0].components.state === 'Bangkok Province') {
+          this.data.province = 'กรุงเทพมหานคร'
+        }
+        // this.data.province = res.data.results[0].components.state
       })
     },
     failed () {
