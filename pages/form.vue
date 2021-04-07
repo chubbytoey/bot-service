@@ -63,12 +63,15 @@ export default {
     const vm = this
     liff.init({ liffId: '1655832876-mQJo6BbZ' })
       .then(() => {
-        if (!liff.isLoggedIn()) { return liff.login() }
-
-        return liff.getProfile().then((profile) => {
-          vm.data.userId = profile.userId
-          vm.fetchData(vm.userId)
-        })
+        if (!liff.isLoggedIn()) {
+          return liff.login()
+        } else {
+          return liff.getProfile().then((profile) => {
+            window.alert('โปรไฟล์ : ', profile)
+            vm.data.userId = profile.userId
+            vm.fetchData(vm.userId)
+          })
+        }
       }).catch(err => console.log(err))
   },
   methods: {
