@@ -75,11 +75,11 @@ export default {
           } else {
             liff.getProfile().then((profile) => {
               self.data.userId = profile.userId
+              self.getLocation()
             }).catch(err => console.log(err))
           }
         }).catch(err => console.log(err))
     }, 0)
-    this.getLocation()
   },
   methods: {
     handleSubmit (e) {
