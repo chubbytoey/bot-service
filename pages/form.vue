@@ -63,9 +63,9 @@ export default {
     }
   },
   mounted () {
-    // this.$nextTick(() => {
-    //   this.$nuxt.$loading.start()
-    // })
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
     const self = this
     setTimeout(function () {
       liff.init({ liffId: '1655832876-mQJo6BbZ' })
@@ -128,8 +128,8 @@ export default {
         // })
       })
     },
-    failed () {
-      console.log('failed')
+    failed (error) {
+      console.log('failed', error)
       this.$nextTick(() => {
         this.$nuxt.$loading.finish()
       })
