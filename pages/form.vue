@@ -107,9 +107,11 @@ export default {
     getLocation () {
       if (window.navigator) {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
+        console.log('เข้า')
       }
     },
     success (position) {
+      console.log('เข้าด้วย')
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
       alert('position:', position.coords.latitude, position.coords.longitude)
