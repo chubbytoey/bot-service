@@ -33,7 +33,7 @@ export default {
     height: 100%;
     z-index: 99999;
     background: rgba(255, 255, 255, 0.8);
-    position: relative;
+    position: absolute;
     & .loader {
         position: absolute;
         top: 50%;
