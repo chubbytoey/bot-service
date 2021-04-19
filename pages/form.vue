@@ -21,11 +21,11 @@
           placeholder="เลือกจังหวัดของท่าน"
           @change="handleSelectChange"
         >
-          <a-select-option value="เชียงใหม่">
-            เชียงใหม่
-          </a-select-option>
           <a-select-option value="กรุงเทพมหานคร">
             กรุงเทพ
+          </a-select-option>
+          <a-select-option value="เชียงใหม่">
+            เชียงใหม่
           </a-select-option>
         </a-select>
       </a-form-item>
