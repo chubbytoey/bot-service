@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ location }}
     <a-form :form="form" @submit="handleSubmit">
       <a-form-item label="หัวข้อ">
         <a-input
@@ -41,6 +42,7 @@
 <script>
 import liff from '@line/liff'
 // import axios from 'axios'
+import result from 'ant-design-vue/lib/result'
 import reportAPI from '~/api/report'
 
 export default {
@@ -119,9 +121,10 @@ export default {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
-      alert('ครึ่งทาง', latlng)
+      this.location.longitude = latlng
       geocoder.geocode({ location: latlng }, (results, status) => {
         alert('เข้า')
+        this.location.latitude = result
         if (status === 'OK') {
           if (results[1]) {
             alert(results[1].formatted_address)
