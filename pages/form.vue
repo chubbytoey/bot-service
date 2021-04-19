@@ -108,17 +108,16 @@ export default {
     getLocation () {
       if (window.navigator) {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
-        console.log('เข้า')
       }
     },
     success (position) {
-      console.log('เข้าด้วย')
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
-      alert('position:', position.coords.latitude, position.coords.longitude)
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.location.latitude},${this.location.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
+        this.location.latitude = res.data.results[0].components.state
+        alert(res.data.results[0].components.state)
         console.log('haaa', res.data.results[0].components.state)
         if (res.data.results[0].components.state === 'Chiang Mai Province') {
           this.data.province = 'เชียงใหม่'
