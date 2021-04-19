@@ -111,10 +111,11 @@ export default {
       }
     },
     success (position) {
+      alert('success1')
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
       // eslint-disable-next-line no-undef
-      const geocoder = new google.maps.Map()
+      const geocoder = new google.maps.Geocoder()
       const latlng = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
