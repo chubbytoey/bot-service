@@ -123,7 +123,7 @@ export default {
       this.location.longitude = latlng
       geocoder.geocode({ location: latlng }, (results, status) => {
         alert('เข้า')
-        this.location.latitude = results
+        this.location.latitude = results[0]
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
         })
