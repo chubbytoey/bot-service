@@ -65,20 +65,21 @@ export default {
     this.$nextTick(() => {
       this.$nuxt.$loading.start()
     })
-    const self = this
-    setTimeout(function () {
-      liff.init({ liffId: '1655832876-mQJo6BbZ' })
-        .then(() => {
-          if (!liff.isLoggedIn()) {
-            liff.login()
-          } else {
-            liff.getProfile().then((profile) => {
-              self.data.userId = profile.userId
-              self.getLocation()
-            }).catch(err => console.log(err))
-          }
-        }).catch(err => console.log(err))
-    }, 0)
+    this.getLocation()
+    // const self = this
+    // setTimeout(function () {
+    //   liff.init({ liffId: '1655832876-mQJo6BbZ' })
+    //     .then(() => {
+    //       if (!liff.isLoggedIn()) {
+    //         liff.login()
+    //       } else {
+    //         liff.getProfile().then((profile) => {
+    //           self.data.userId = profile.userId
+    //           self.getLocation()
+    //         }).catch(err => console.log(err))
+    //       }
+    //     }).catch(err => console.log(err))
+    // }, 0)
   },
   methods: {
     handleSubmit (e) {
