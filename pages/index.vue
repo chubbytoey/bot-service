@@ -42,7 +42,6 @@
 <script>
 import liff from '@line/liff'
 // import axios from 'axios'
-import result from 'ant-design-vue/lib/result'
 import reportAPI from '~/api/report'
 
 export default {
@@ -124,14 +123,17 @@ export default {
       this.location.longitude = latlng
       geocoder.geocode({ location: latlng }, (results, status) => {
         alert('เข้า')
-        this.location.latitude = result
-        if (status === 'OK') {
-          if (results[1]) {
-            alert(results[1].formatted_address)
-          } else {
-            window.alert('No results found')
-          }
-        }
+        this.location.latitude = results
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
+        // if (status === 'OK') {
+        //   if (results[1]) {
+        //     alert(results[1].formatted_address)
+        //   } else {
+        //     window.alert('No results found')
+        //   }
+        // }
       })
       // const url = 'https://maps.googleapis.com/maps/api/geocode/json?parameters'
       // axios.get(url).then((res) => {
@@ -141,9 +143,6 @@ export default {
       //   } else if (province === 'Bangkok Province' || province === 'จังหวัดกรุงเทพมหานคร') {
       //     this.data.province = 'กรุงเทพมหานคร'
       //   }
-      //   this.$nextTick(() => {
-      //     this.$nuxt.$loading.finish()
-      //   })
       // })
     },
     failed (error) {
