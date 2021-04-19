@@ -62,9 +62,9 @@ export default {
     }
   },
   mounted () {
-    // this.$nextTick(() => {
-    //   this.$nuxt.$loading.start()
-    // })
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
     const self = this
     setTimeout(function () {
       liff.init({ liffId: '1655832876-mQJo6BbZ' })
@@ -112,6 +112,7 @@ export default {
     success (position) {
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
+      alert('position:', position.coords.latitude, position.coords.longitude)
       const apiKey = 'b9a603fbea534698ba75cab622aa2109'
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.location.latitude},${this.location.longitude}&key=${apiKey}`
       axios.get(url).then((res) => {
@@ -121,16 +122,16 @@ export default {
         } else if (res.data.results[0].components.state === 'Bangkok Province') {
           this.data.province = 'กรุงเทพมหานคร'
         }
-        // this.$nextTick(() => {
-        //   this.$nuxt.$loading.finish()
-        // })
+        this.$nextTick(() => {
+          this.$nuxt.$loading.finish()
+        })
       })
     },
     failed (error) {
       console.log('failed', error)
-      // this.$nextTick(() => {
-      //   this.$nuxt.$loading.finish()
-      // })
+      this.$nextTick(() => {
+        this.$nuxt.$loading.finish()
+      })
     }
   }
 }
