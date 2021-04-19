@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     {{ location }}
+    {{ data.province }}
     <a-form :form="form" @submit="handleSubmit">
       <a-form-item label="หัวข้อ">
         <a-input
