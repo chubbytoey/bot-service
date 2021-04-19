@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     {{ location }}
+    <div id="map" />
     <a-form :form="form" @submit="handleSubmit">
       <a-form-item label="หัวข้อ">
         <a-input
@@ -41,7 +42,7 @@
 
 <script>
 import liff from '@line/liff'
-// import axios from 'axios'
+import axios from 'axios'
 import reportAPI from '~/api/report'
 
 export default {
@@ -63,10 +64,10 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-    })
-    this.getLocation()
+    // this.$nextTick(() => {
+    //   this.$nuxt.$loading.start()
+    // })
+    this.success()
     // const self = this
     // setTimeout(function () {
     //   liff.init({ liffId: '1655832876-mQJo6BbZ' })
@@ -111,40 +112,24 @@ export default {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
       }
     },
-    success (position) {
-      this.location.latitude = position.coords.latitude
-      this.location.longitude = position.coords.longitude
-      const google = window.google
-      const geocoder = new google.maps.Geocoder()
+    async success () {
+      // const geocoder = window.google.maps
       const latlng = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
+        lat: '18.78774487571035',
+        lng: '98.95339548758108'
       }
-      alert(geocoder)
+      // console.log('>>>>', geocoder)
       this.location.longitude = latlng
-      geocoder.geocode({ location: latlng }, (results, status) => {
-        alert('เข้า')
-        this.location.latitude = results
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
-        // if (status === 'OK') {
-        //   if (results[1]) {
-        //     alert(results[1].formatted_address)
-        //   } else {
-        //     window.alert('No results found')
-        //   }
-        // }
-      })
-      // const url = 'https://maps.googleapis.com/maps/api/geocode/json?parameters'
-      // axios.get(url).then((res) => {
-      //   const province = res.data.results[0].components.state
-      //   if (province === 'Chiang Mai Province' || province === 'จังหวัดเชียงใหม่') {
-      //     this.data.province = 'เชียงใหม่'
-      //   } else if (province === 'Bangkok Province' || province === 'จังหวัดกรุงเทพมหานคร') {
-      //     this.data.province = 'กรุงเทพมหานคร'
-      //   }
+      // geocoder.geocode({ location: latlng }, (results, status) => {
+      //   alert('เข้า')
+      //   this.location.latitude = results
       // })
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng.lat},${latlng.lng}&key=AIzaSyCryQIhioR7MbzgqBmEozaTxpRNyHNfb9k`
+      const res = await axios.get(url)
+      const data = res.data.results[0].address_components.find((value) => {
+        return value.types.includes('administrative_area_level_1')
+      })
+      console.log('>>>>', data.short_name)
     },
     failed (error) {
       console.log('failed', error)

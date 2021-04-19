@@ -109,21 +109,32 @@ export default {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
       }
     },
-    success (position) {
+    async success (position) {
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
-      const apiKey = 'b9a603fbea534698ba75cab622aa2109'
-      const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.location.latitude},${this.location.longitude}&key=${apiKey}`
-      axios.get(url).then((res) => {
-        const province = res.data.results[0].components.state
-        if (province === 'Chiang Mai Province' || province === 'จังหวัดเชียงใหม่') {
-          this.data.province = 'เชียงใหม่'
-        } else if (province === 'Bangkok Province' || province === 'จังหวัดกรุงเทพมหานคร') {
-          this.data.province = 'กรุงเทพมหานคร'
-        }
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
+      // const apiKey = 'b9a603fbea534698ba75cab622aa2109'
+      // const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.location.latitude},${this.location.longitude}&key=${apiKey}`
+      // axios.get(url).then((res) => {
+      //   const province = res.data.results[0].components.state
+      //   if (province === 'Chiang Mai Province' || province === 'จังหวัดเชียงใหม่') {
+      //     this.data.province = 'เชียงใหม่'
+      //   } else if (province === 'Bangkok Province' || province === 'จังหวัดกรุงเทพมหานคร') {
+      //     this.data.province = 'กรุงเทพมหานคร'
+      //   }
+      //   this.$nextTick(() => {
+      //     this.$nuxt.$loading.finish()
+      //   })
+      // })
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=AIzaSyCryQIhioR7MbzgqBmEozaTxpRNyHNfb9k`
+      const res = await axios.get(url)
+      const data = res.data.results[0].address_components.find((value) => {
+        return value.types.includes('administrative_area_level_1')
+      })
+      if (data.short_name === 'Chiang Mai Province' || data.short_name === 'จ.เชียงใหม่') {
+        this.data.province = 'เชียงใหม่'
+      }
+      this.$nextTick(() => {
+        this.$nuxt.$loading.finish()
       })
     },
     failed (error) {
