@@ -111,7 +111,6 @@ export default {
       }
     },
     success (position) {
-      alert('success1')
       this.location.latitude = position.coords.latitude
       this.location.longitude = position.coords.longitude
       // eslint-disable-next-line no-undef
@@ -120,8 +119,9 @@ export default {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
-      alert('ครึ่งทาง')
-      geocoder.geocode({ location: latlng }, function (results, status) {
+      alert('ครึ่งทาง', latlng)
+      geocoder.geocode({ location: latlng }, (results, status) => {
+        alert('เข้า')
         if (status === 'OK') {
           if (results[1]) {
             alert(results[1].formatted_address)
