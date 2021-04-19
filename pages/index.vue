@@ -120,10 +120,11 @@ export default {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       }
+      alert(geocoder)
       this.location.longitude = latlng
       geocoder.geocode({ location: latlng }, (results, status) => {
         alert('เข้า')
-        this.location.latitude = results[0]
+        this.location.latitude = results
         this.$nextTick(() => {
           this.$nuxt.$loading.finish()
         })
