@@ -21,11 +21,11 @@
           placeholder="เลือกจังหวัดของท่าน"
           @change="handleSelectChange"
         >
-          <a-select-option value="เชียงใหม่">
-            เชียงใหม่
-          </a-select-option>
           <a-select-option value="กรุงเทพมหานคร">
             กรุงเทพ
+          </a-select-option>
+          <a-select-option value="เชียงใหม่">
+            เชียงใหม่
           </a-select-option>
         </a-select>
       </a-form-item>
@@ -40,7 +40,7 @@
 
 <script>
 import liff from '@line/liff'
-import axios from 'axios'
+// import axios from 'axios'
 import reportAPI from '~/api/report'
 
 export default {
@@ -56,13 +56,29 @@ export default {
         type: new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('type')
       },
       location: {
-        latitude: null,
-        longitude: null
+        latitude: '',
+        longitude: ''
       }
     }
   },
   mounted () {
-    this.getLocation()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+    })
+    const self = this
+    setTimeout(function () {
+      liff.init({ liffId: '1655832876-mQJo6BbZ' })
+        .then(() => {
+          if (!liff.isLoggedIn()) {
+            liff.login()
+          } else {
+            liff.getProfile().then((profile) => {
+              self.data.userId = profile.userId
+              self.getLocation()
+            }).catch(err => console.log(err))
+          }
+        }).catch(err => console.log(err))
+    }, 0)
   },
   methods: {
     handleSubmit (e) {
@@ -71,7 +87,6 @@ export default {
         if (!err) {
           this.data.topic = values.topic
           if (values.province) {
-            console.log('มี')
             this.data.province = values.province
           }
           this.data.detail = values.detail
@@ -90,32 +105,44 @@ export default {
       })
     },
     getLocation () {
-      this.$nextTick(() => {
-        this.$nuxt.$loading.start()
-      })
       if (window.navigator) {
         window.navigator.geolocation.getCurrentPosition(this.success, this.failed)
       }
     },
     success (position) {
-      this.latitude = position.coords.latitude
-      this.longitude = position.coords.longitude
-      const apiKey = 'b9a603fbea534698ba75cab622aa2109'
-      const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.latitude},${this.longitude}&key=${apiKey}`
-      axios.get(url).then((res) => {
-        console.log('haaa', res.data.results[0].components.state)
-        if (res.data.results[0].components.state === 'Chiang Mai Province') {
-          this.data.province = 'เชียงใหม่'
-        } else if (res.data.results[0].components.state === 'Bangkok Province') {
-          this.data.province = 'กรุงเทพมหานคร'
+      this.location.latitude = position.coords.latitude
+      this.location.longitude = position.coords.longitude
+      // eslint-disable-next-line no-undef
+      const geocoder = new google.maps.Map()
+      const latlng = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      }
+      alert('ครึ่งทาง')
+      geocoder.geocode({ location: latlng }, function (results, status) {
+        if (status === 'OK') {
+          if (results[1]) {
+            alert(results[1].formatted_address)
+          } else {
+            window.alert('No results found')
+          }
         }
-        this.$nextTick(() => {
-          this.$nuxt.$loading.finish()
-        })
       })
+      // const url = 'https://maps.googleapis.com/maps/api/geocode/json?parameters'
+      // axios.get(url).then((res) => {
+      //   const province = res.data.results[0].components.state
+      //   if (province === 'Chiang Mai Province' || province === 'จังหวัดเชียงใหม่') {
+      //     this.data.province = 'เชียงใหม่'
+      //   } else if (province === 'Bangkok Province' || province === 'จังหวัดกรุงเทพมหานคร') {
+      //     this.data.province = 'กรุงเทพมหานคร'
+      //   }
+      //   this.$nextTick(() => {
+      //     this.$nuxt.$loading.finish()
+      //   })
+      // })
     },
-    failed () {
-      console.log('failed')
+    failed (error) {
+      console.log('failed', error)
       this.$nextTick(() => {
         this.$nuxt.$loading.finish()
       })
