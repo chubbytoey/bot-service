@@ -30,7 +30,12 @@
         </a-select>
       </a-form-item>
       <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-        <a-button type="primary" html-type="submit">
+        <a-button
+          type="primary"
+          html-type="submit"
+          :disabled="isCalling"
+          :loading="isCalling"
+        >
           Submit
         </a-button>
       </a-form-item>
@@ -58,7 +63,8 @@ export default {
       location: {
         latitude: '',
         longitude: ''
-      }
+      },
+      isCalling: false
     }
   },
   mounted () {
@@ -85,6 +91,7 @@ export default {
       e.preventDefault()
       this.form.validateFields(async (err, values) => {
         if (!err) {
+          this.isCalling = true
           this.data.topic = values.topic
           if (values.province) {
             this.data.province = values.province
@@ -93,6 +100,7 @@ export default {
           this.data.lineId = values.lineId
           await reportAPI.addReport(this.data).then((res) => {
             if (res.successful) {
+              this.isCalling = false
               liff.closeWindow()
             }
           })
