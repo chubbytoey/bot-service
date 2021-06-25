@@ -43,9 +43,13 @@ export default {
     this.getReport()
   },
   methods: {
-    async getReport () {
-      await reportAPI.queryReport(this.$route.params.id).then((res) => {
+    getReport () {
+      this.$nextTick(() => {
+        this.$nuxt.$loading.start()
+      })
+      reportAPI.queryReport(this.$route.params.id).then((res) => {
         this.data = res
+        this.$nuxt.$loading.finish()
       })
     },
     handleSubmit (e) {

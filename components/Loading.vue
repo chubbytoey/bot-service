@@ -32,7 +32,7 @@ export default {
     width: 100%;
     min-height: 100%;
     z-index: 99999;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgb(255, 255, 255);
     position: absolute;
     & .loader {
         position: absolute;
