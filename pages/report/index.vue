@@ -20,10 +20,15 @@ export default {
     this.getReport()
   },
   methods: {
-    async getReport () {
-      await reportAPI.getReport(new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('province')).then((res) => {
-        this.reports = res
+    getReport () {
+      this.$nextTick(() => {
+        this.$nuxt.$loading.start()
       })
+      reportAPI.getReport(new URLSearchParams(decodeURIComponent(window.location.search).replace('?liff.state=', '')).get('province'))
+        .then((res) => {
+          this.reports = res
+          this.$nuxt.$loading.finish()
+        })
     }
   }
 }

@@ -30,7 +30,7 @@ export default {
 <style lang="scss" scoped>
 .loading {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     z-index: 99999;
     background: rgba(255, 255, 255, 0.8);
     position: absolute;
